@@ -1,0 +1,6 @@
+node_modules/
+dist/
+package-lock.json
+tests/routes/__snapshots__/
+tests/models/__snapshots__/
+tests/util/__snapshots__/
