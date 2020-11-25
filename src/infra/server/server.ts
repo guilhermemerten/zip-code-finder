@@ -1,10 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import {createConnection} from 'typeorm';
 import utilRoutes from '../routes/util-routes';
 import Logger from '../helpers/log/logger';
 
 class ExpressServer {
-  private logger: Logger = Logger.getInstance();
+  private logger: any = Logger.getInstance();
 
   private app: express.Application;
 
@@ -13,6 +14,7 @@ class ExpressServer {
     this.middleware();
     this.configureRoutes();
     this.configurePort();
+    createConnection();
   }
 
   getApp() {

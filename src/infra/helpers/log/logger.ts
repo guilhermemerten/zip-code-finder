@@ -26,18 +26,10 @@ export default class Logger {
     if (this.instanceLogger === undefined) {
       this.instanceLogger = new Logger();
     }
-    return this.instanceLogger;
+    return this.instanceLogger.getWinstonInstance();
   }
 
-  info(message:string, metadata?:any[]){
-    return winston.info(message, metadata);
-  }
-
-  debug(message:string, metadata?:any[]){
-    return winston.debug(message, metadata);
-  }
-
-  error(message:string, metadata?:any[]){
-    return winston.error(message, metadata);
+  private getWinstonInstance():winston.Logger{
+    return winston;
   }
 }
