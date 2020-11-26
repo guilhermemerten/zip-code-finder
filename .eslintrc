@@ -8,6 +8,7 @@
     "eslint linebreak-style ": [0," error "," windows "],
     "import/no-unresolved": "off",
     "import/no-dynamic-require": "off",
+    "class-methods-use-this": "off",
     "@typescript-eslint/no-unused-vars": [2, { "args": "none" }],
     "max-len": ["error", {"code": 120}],
     "semi": "off"
