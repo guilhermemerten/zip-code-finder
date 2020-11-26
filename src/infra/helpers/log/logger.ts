@@ -29,7 +29,7 @@ export default class Logger {
     return this.instanceLogger.getWinstonInstance();
   }
 
-  private getWinstonInstance():winston.Logger{
+  private getWinstonInstance(){
     return winston;
   }
 }

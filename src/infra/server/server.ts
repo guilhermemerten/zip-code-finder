@@ -2,19 +2,22 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {createConnection} from 'typeorm';
 import utilRoutes from '../routes/util-routes';
+import zipCodeRoutes from '../routes/zip-code-routes';
 import Logger from '../helpers/log/logger';
 
+const testEnvironment = process.env.NODE_ENV === 'test';
+
 class ExpressServer {
-  private logger: any = Logger.getInstance();
+  private logger = Logger.getInstance();
 
   private app: express.Application;
 
   constructor() {
     this.app = express();
+    createConnection();
     this.middleware();
     this.configureRoutes();
-    this.configurePort();
-    createConnection();
+    this.configurePort();    
   }
 
   getApp() {
@@ -29,15 +32,18 @@ class ExpressServer {
   }
 
   private configurePort() {
-    const port = process.env.NODE_PORT;
-    this.app.listen(port, () => {
-      this.logger.debug(`[ExpressServer] - configurePort - Server started on port ${port}`);
-    });
+    if (!testEnvironment) {
+      const port = process.env.NODE_PORT;
+      this.app.listen(port, () => {
+        this.logger.debug(`[ExpressServer] - configurePort - Server started on port ${port}`);
+      });
+    }
   }
 
   private configureRoutes() {
     this.app.use('/', utilRoutes);
+    this.app.use('/', zipCodeRoutes);
   }
 }
 
-export default new ExpressServer();
+export default new ExpressServer().getApp();
