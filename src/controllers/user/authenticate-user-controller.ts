@@ -38,7 +38,7 @@ export default class AuthenticateUserController implements Controller {
       });
       return {
         statusCode: 500,
-        body: { error: 'Internal Server Error' }
+        body: 'Internal Server Error'
       };
     }
   }
@@ -47,7 +47,7 @@ export default class AuthenticateUserController implements Controller {
     if (!userName || !password) {
       return {
         statusCode: 400,
-        body: { error: 'Invalid Parameters' }
+        body: 'Invalid Parameters'
       };
     }
     return null;

@@ -29,7 +29,7 @@ export default class FindZipCodeController implements Controller {
       if (result === null) {
         return {
           statusCode: 404,
-          body: {error:'Zip Code not found'}
+          body: 'Zip Code not found'
         };
       }
       return {
@@ -40,7 +40,7 @@ export default class FindZipCodeController implements Controller {
       this.logger.error(`[GetZipCodeController] - handle - Error: ${error.msg}`, error);
       return {
         statusCode: 500,
-        body: {error:'Internal Server Error'}
+        body: 'Internal Server Error'
       };
     }
   }
@@ -49,7 +49,7 @@ export default class FindZipCodeController implements Controller {
     if (!/^[0-9]{8}$/.test(zipCodeParameter)) {
       return {
         statusCode: 400,
-        body: {error:'Invalid Zip Code Parameter'}
+        body: 'Invalid Zip Code Parameter'
       };
     }
     return null;
