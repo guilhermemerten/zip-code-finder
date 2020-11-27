@@ -6,7 +6,6 @@ import zipCodeRoutes from '../routes/zip-code-routes';
 import userRoutes from '../routes/user-routes';
 import Logger from '../helpers/log/logger';
 import RequestTimeMiddleware from './middlewares/request-time-middleware';
-import AuthMiddleware from './middlewares/auth-middleware';
 
 const testEnvironment = process.env.NODE_ENV === 'test';
 
@@ -47,7 +46,7 @@ class ExpressServer {
   private configureRoutes() {
     this.app.use('/', utilRoutes);
     this.app.use('/', userRoutes);
-    this.app.use('/', AuthMiddleware.auth, zipCodeRoutes);    
+    this.app.use('/', zipCodeRoutes);    
   }
 }
 

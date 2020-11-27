@@ -1,6 +1,7 @@
 import express from 'express';
 import ExpressRouteAdapter from '../adapters/routes/express-route-adapter';
 import ControllerFactory from '../factories/controller-factory';
+import AuthMiddleware from '../server/middlewares/auth-middleware';
 
 class ZipCodeRoutes {
   private routes: express.Router;
@@ -12,7 +13,7 @@ class ZipCodeRoutes {
 
   addFindZipCodeRoute() {
     this.routes.get(
-      '/zipcode/find/:zipCode',
+      '/zipcode/find/:zipCode',AuthMiddleware.auth,
       ExpressRouteAdapter.adaptRoute(ControllerFactory.makeGetZipCodeController())
     );
   }

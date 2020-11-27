@@ -64,6 +64,19 @@ describe('Testing zip code routes', () => {
       });
   });
 
+  it('a forbidden response for GET /zipcode/find/:zipcode', async done => {
+    const token = 'teste';
+    agent
+      .get('/zipcode/find/99560000')
+      .set('x-access-token', token)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(403)
+      .end(err => {
+        if (err) throw err;
+        done();
+      });
+  });
+
   it('should return a forbidden response for GET /zipcode/find/:zipcode', async done => {
     agent
       .get('/zipcode/find/99560000')
