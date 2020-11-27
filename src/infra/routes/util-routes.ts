@@ -9,7 +9,7 @@ class UtilRoutes {
   }
 
   addRouteHealthCheck() {
-    this.routes.get(`/healthcheck`, (req, res) => {
+    this.routes.get(`/healthcheck`, async (req, res) => {
       res.status(200).json({ status: 'UP' });
     });
   }

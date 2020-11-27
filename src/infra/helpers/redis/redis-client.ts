@@ -4,7 +4,7 @@ import { config } from '../../../config/config';
 const Redis = require('ioredis');
 
 export default class RedisClient {
-  private logger: Logger = Logger.getInstance();
+  private logger = Logger.getInstance();
 
   private redisClient: any;
 

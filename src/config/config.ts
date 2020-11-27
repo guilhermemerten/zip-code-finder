@@ -13,5 +13,8 @@ export const config = {
   },
   log: {
     level: 'debug'
+  },
+  jwt:{
+    expireTime: 300
   }
 };

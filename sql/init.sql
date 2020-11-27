@@ -10,6 +10,19 @@ ENGINE=InnoDB
 DEFAULT CHARSET=latin1
 COLLATE=latin1_bin;
 
+CREATE TABLE user (
+	username VARCHAR(100) NOT NULL,
+	password varchar(500) NOT NULL,
+	CONSTRAINT username_PK PRIMARY KEY (username)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=latin1
+COLLATE=latin1_bin;
+
+INSERT INTO user
+(username, password)
+VALUES('magalu', '$2b$10$JqwRzy6MoPrtXkoBoRVDW.gthdGJ4bpRuAC6dliL/SH2SDjjgqgD6');
+
 INSERT INTO zipcode
 (zipcode, city, street, neighborhood, state)
 VALUES('99560000', 'Sarandi', 'Avenida Expedicionario', 'Centro', 'RS');

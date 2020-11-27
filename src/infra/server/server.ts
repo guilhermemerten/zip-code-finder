@@ -3,7 +3,10 @@ import bodyParser from 'body-parser';
 import {createConnection} from 'typeorm';
 import utilRoutes from '../routes/util-routes';
 import zipCodeRoutes from '../routes/zip-code-routes';
+import userRoutes from '../routes/user-routes';
 import Logger from '../helpers/log/logger';
+import RequestTimeMiddleware from './middlewares/request-time-middleware';
+import AuthMiddleware from './middlewares/auth-middleware';
 
 const testEnvironment = process.env.NODE_ENV === 'test';
 
@@ -29,6 +32,7 @@ class ExpressServer {
     this.app.disable('etag');
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(RequestTimeMiddleware.responseTime);
   }
 
   private configurePort() {
@@ -42,7 +46,8 @@ class ExpressServer {
 
   private configureRoutes() {
     this.app.use('/', utilRoutes);
-    this.app.use('/', zipCodeRoutes);
+    this.app.use('/', userRoutes);
+    this.app.use('/', AuthMiddleware.auth, zipCodeRoutes);    
   }
 }
 

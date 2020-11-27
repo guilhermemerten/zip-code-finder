@@ -6,7 +6,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   collectCoverage: true,
-  globalSetup: './tests/env/dotenv-test.js',
+  globalSetup: '<rootDir>/tests/env/dotenv-test.js',
   coverageDirectory: './coverage/reports',
   coverageReporters: ['text', 'clover', 'lcov'],
   collectCoverageFrom: [

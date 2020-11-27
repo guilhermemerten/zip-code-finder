@@ -18,6 +18,13 @@ export default class GetZipCodeController implements Controller {
     try {
       const zipCodeParameter = httpRequest.params.zipCode;
       this.logger.debug(`[GetZipCodeController] - handle - zipcodeparameter: ${zipCodeParameter}`);
+
+      const validateCep = await this.validateZipCodeParameter(zipCodeParameter);
+
+      if (validateCep) {
+        return validateCep;
+      }
+
       const result: ZipCode = await this.findZipCodeUseCase.findZipCode(zipCodeParameter);
       if (result === null) {
         return {
@@ -36,5 +43,15 @@ export default class GetZipCodeController implements Controller {
         body: 'Internal Server Error'
       };
     }
+  }
+
+  private async validateZipCodeParameter(zipCodeParameter: string): Promise<HttpResponse> {
+    if (!/^[0-9]{8}$/.test(zipCodeParameter)) {
+      return {
+        statusCode: 400,
+        body: 'Invalid Zip Code Parameter'
+      };
+    }
+    return null;
   }
 }
