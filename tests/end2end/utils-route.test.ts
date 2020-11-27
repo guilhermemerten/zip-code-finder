@@ -33,6 +33,17 @@ describe('Testing util routes', () => {
       });
   });
 
+  it('should return a successful response for GET /statistics', done => {
+    agent
+      .get('/statistics')
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200)
+      .end(err => {
+        if (err) throw err;
+        done();
+      });
+  });
+
   
 });
 
