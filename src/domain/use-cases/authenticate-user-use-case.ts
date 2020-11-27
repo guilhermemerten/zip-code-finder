@@ -10,6 +10,10 @@ export default class AuthenticateUserUseCase {
 
   async authenticateUser(userName: string, password: string): Promise<string> {
     const user:User = await this.userGateway.findUser(userName);
+
+    if(user === null){
+      throw new Error('Wrong user or password.');
+    }
     
     const verifiedPassword:boolean = await this.userGateway.verifyPassword(password, user.password);
     

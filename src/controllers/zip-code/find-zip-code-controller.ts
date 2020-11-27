@@ -5,7 +5,7 @@ import ZipCode from '../../domain/entities/zip-code';
 import Controller from '../interfaces/controller';
 import { HttpRequest, HttpResponse } from '../interfaces/http';
 
-export default class GetZipCodeController implements Controller {
+export default class FindZipCodeController implements Controller {
   private logger = Logger.getInstance();
 
   private readonly findZipCodeUseCase: FindZipCodeUseCase;
@@ -29,7 +29,7 @@ export default class GetZipCodeController implements Controller {
       if (result === null) {
         return {
           statusCode: 404,
-          body: 'Zip Code not found'
+          body: {error:'Zip Code not found'}
         };
       }
       return {
@@ -40,7 +40,7 @@ export default class GetZipCodeController implements Controller {
       this.logger.error(`[GetZipCodeController] - handle - Error: ${error.msg}`, error);
       return {
         statusCode: 500,
-        body: 'Internal Server Error'
+        body: {error:'Internal Server Error'}
       };
     }
   }
@@ -49,7 +49,7 @@ export default class GetZipCodeController implements Controller {
     if (!/^[0-9]{8}$/.test(zipCodeParameter)) {
       return {
         statusCode: 400,
-        body: 'Invalid Zip Code Parameter'
+        body: {error:'Invalid Zip Code Parameter'}
       };
     }
     return null;

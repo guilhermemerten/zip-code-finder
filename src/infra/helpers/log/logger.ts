@@ -13,7 +13,8 @@ export default class Logger {
   private static configureWinston() {
     const consoleLog = new winston.transports.Console({
       format: winston.format.combine(winston.format.prettyPrint({ colorize: true })),
-      level: config.log.level
+      level: config.log.level,
+      silent: process.env.NODE_ENV === 'test'
     });
     winston.createLogger({
       exitOnError: false

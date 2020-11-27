@@ -15,6 +15,15 @@ export default class AuthenticateUserController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      const validateParams = await this.validateParameters(
+        httpRequest.body.userName,
+        httpRequest.body.password
+      );
+
+      if (validateParams) {
+        return validateParams;
+      }
+
       const token = await this.authenticateUserUseCase.authenticateUser(
         httpRequest.body.userName,
         httpRequest.body.password
@@ -24,11 +33,23 @@ export default class AuthenticateUserController implements Controller {
         body: { token }
       };
     } catch (error) {
-      this.logger.error(`[AuthenticateUserController] - handle - Error: ${error.message}`, {error});
+      this.logger.error(`[AuthenticateUserController] - handle - Error: ${error.message}`, {
+        error
+      });
       return {
         statusCode: 500,
-        body: 'Internal Server Error'
+        body: { error: 'Internal Server Error' }
       };
     }
+  }
+
+  private async validateParameters(userName: string, password: string): Promise<HttpResponse> {
+    if (!userName || !password) {
+      return {
+        statusCode: 400,
+        body: { error: 'Invalid Parameters' }
+      };
+    }
+    return null;
   }
 }
