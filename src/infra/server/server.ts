@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
 import {createConnection} from 'typeorm';
 import utilRoutes from '../routes/util-routes';
 import zipCodeRoutes from '../routes/zip-code-routes';
@@ -8,6 +9,7 @@ import Logger from '../helpers/log/logger';
 import RequestTimeMiddleware from './middlewares/request-time-middleware';
 
 const testEnvironment = process.env.NODE_ENV === 'test';
+const swaggerDocument = require('../../../docs/swagger/swagger.json');
 
 class ExpressServer {
   private logger = Logger.getInstance();
@@ -18,6 +20,7 @@ class ExpressServer {
     this.app = express();
     createConnection();
     this.middleware();
+    this.configureSwagger();
     this.configureRoutes();
     this.configurePort();    
   }
@@ -43,10 +46,14 @@ class ExpressServer {
     }
   }
 
+  private configureSwagger() { 
+    this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  }
+
   private configureRoutes() {
     this.app.use('/', utilRoutes);
     this.app.use('/', userRoutes);
-    this.app.use('/', zipCodeRoutes);    
+    this.app.use('/', zipCodeRoutes);
   }
 }
 

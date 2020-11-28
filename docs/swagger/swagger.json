@@ -1,0 +1,205 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.0.0",
+    "title": "Zip Code Finder",
+    "contact": {
+      "email": "guilherme.merten@gmail.com"
+    }
+  },
+  "host": "localhost:8081",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "zipcode",
+      "description": "Operações referente a busca de CEP"
+    },
+    {
+      "name": "user",
+      "description": "Operação de login"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/user/auth": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Efetua a autenticação do usuário",
+        "description": "",
+        "operationId": "auth",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Objeto que representa o usuário",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "userName",
+                "password"
+              ],
+              "properties": {
+                "userName": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response de sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Parâmetros inválidos"
+          },
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Erro interno"
+          }
+        }
+      }
+    },
+    "/zipcode/find/{zipCode}": {
+      "get": {
+        "tags": [
+          "zipcode"
+        ],
+        "summary": "Busca um CEP",
+        "description": "Retorna o endereço do CEP informado",
+        "operationId": "findZipCode",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "zipCode",
+            "in": "path",
+            "description": "CEP",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response de sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "zipCode": {
+                  "type": "string"
+                },
+                "street": {
+                  "type": "string"
+                },
+                "neighborhodd": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Cep inválido"
+          },
+          "403": {
+            "description": "Acesso proibido"
+          },
+          "404": {
+            "description": "CEP não encontrado"
+          },
+          "500": {
+            "description": "Erro interno"
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "token": {
+      "type": "apiKey",
+      "name": "x-access-token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "UserRequest": {
+      "type": "object",
+      "required": [
+        "userName",
+        "password"
+      ],
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "ZipCodeResponse": {
+      "type": "object",
+      "properties": {
+        "zipCode": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "neighborhodd": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      }
+    },
+    "AuthenticationResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
