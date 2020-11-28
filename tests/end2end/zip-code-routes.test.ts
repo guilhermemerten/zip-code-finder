@@ -20,7 +20,8 @@ jest.mock('typeorm', () => {
     getRepository: () => mockZipCodeRepository,
     PrimaryColumn: () => {},
     Column: () => {},
-    Entity: () => {}
+    Entity: () => {},
+    In: () => {}
   };
 });
 
@@ -36,7 +37,7 @@ beforeAll(async done => {
 
 describe('Testing zip code routes', () => {
   it('should return not found for GET /zipcode/find/:zipcode', async done => {
-    mockZipCodeRepository.findOne.mockReturnValue(null);
+    mockZipCodeRepository.findOne.mockReturnValue(undefined);
     const token = await userGatewaAdapter.generateJWT('teste');
     agent
       .get('/zipcode/find/99560000')

@@ -1,5 +1,4 @@
-/* eslint-disable no-await-in-loop */
-import { getRepository } from 'typeorm';
+import { getRepository, In } from 'typeorm';
 import ZipCodeConverter from '../../helpers/converters/zip-code-converter';
 import ZipCodeGateway from '../../../domain/gateways/zip-code-gateway';
 import ZipCodeEntity from '../../database/entities/zip-code';
@@ -10,10 +9,15 @@ class ZipCodeGatewayAdapter implements ZipCodeGateway {
   private logger = Logger.getInstance();
 
   async findZipCode(zipCode: string): Promise<ZipCode> {
-    const zipCodeEntity: ZipCodeEntity = await this.findZipCodeAndSimilar(zipCode);
+    let zipCodeEntity: ZipCodeEntity = await getRepository(ZipCodeEntity).findOne({
+      zipcode: zipCode
+    });
 
-    if (zipCodeEntity === null) {
-      return null;
+    if (!zipCodeEntity) {
+      zipCodeEntity = await this.tryToFindSimilarZipCode(zipCode);
+      if (!zipCodeEntity) {
+        return null;
+      }
     }
 
     this.logger.debug(`Zip code`, zipCodeEntity);
@@ -24,21 +28,21 @@ class ZipCodeGatewayAdapter implements ZipCodeGateway {
     return zipCodeDomainEntity;
   }
 
-  private async findZipCodeAndSimilar(zipCode: string): Promise<ZipCodeEntity> {
+  private async tryToFindSimilarZipCode(zipCode: string): Promise<ZipCodeEntity> {
     const zipCodeCharArray: string[] = zipCode.split('');
-  
+    const zipCodeWhereItems: string[] = [];
     for (let i = zipCode.length; i > 1; i -= 1) {
-      const zipCodeSearch = zipCodeCharArray.join('');
-      const zipCodeEntity = await getRepository(ZipCodeEntity).findOne({
-        zipcode: zipCodeSearch
-      });
       zipCodeCharArray[i - 1] = '0';
-      if (zipCodeEntity) {
-        return zipCodeEntity;
-      }
+      const zipCodeSearch = zipCodeCharArray.join('');
+      zipCodeWhereItems.push(zipCodeSearch);
     }
 
-    return null;
+    const zipCodeEntity = await getRepository(ZipCodeEntity).findOne({
+      where: { zipcode: In(zipCodeWhereItems) },
+      order: { zipcode: 'DESC' }
+    });
+
+    return zipCodeEntity;
   }
 }
 
