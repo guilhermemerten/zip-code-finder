@@ -4,6 +4,12 @@ import FindZipCodeUseCase from '../../domain/use-cases/find-zip-code-use-case';
 import ZipCode from '../../domain/entities/zip-code';
 import Controller from '../interfaces/controller';
 import { HttpRequest, HttpResponse } from '../interfaces/http';
+import {
+  makeSucessResponse,
+  makeInternalServerErrorResponse,
+  makeBadRequestResponse,
+  makeNotFoundResponse
+} from '../helpers/responses';
 
 export default class FindZipCodeController implements Controller {
   private logger = Logger.getInstance();
@@ -27,30 +33,18 @@ export default class FindZipCodeController implements Controller {
 
       const result: ZipCode = await this.findZipCodeUseCase.findZipCode(zipCodeParameter);
       if (result === null) {
-        return {
-          statusCode: 404,
-          body: 'Zip Code not found'
-        };
+        return makeNotFoundResponse('Zip Code not found');
       }
-      return {
-        statusCode: 200,
-        body: result
-      };
+      return makeSucessResponse(result);
     } catch (error) {
       this.logger.error(`[GetZipCodeController] - handle - Error: ${error.msg}`, error);
-      return {
-        statusCode: 500,
-        body: 'Internal Server Error'
-      };
+      return makeInternalServerErrorResponse('Internal Server Error');
     }
   }
 
   private async validateZipCodeParameter(zipCodeParameter: string): Promise<HttpResponse> {
     if (!/^[0-9]{8}$/.test(zipCodeParameter)) {
-      return {
-        statusCode: 400,
-        body: 'Invalid Zip Code Parameter'
-      };
+      return makeBadRequestResponse('Invalid Zip Code Parameter');
     }
     return null;
   }

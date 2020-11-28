@@ -3,6 +3,11 @@ import UserGateway from '../../domain/gateways/user-gateway';
 import AuthenticateUserUseCase from '../../domain/use-cases/authenticate-user-use-case';
 import Controller from '../interfaces/controller';
 import { HttpRequest, HttpResponse } from '../interfaces/http';
+import {
+  makeSucessResponse,
+  makeInternalServerErrorResponse,
+  makeBadRequestResponse
+} from '../helpers/responses';
 
 export default class AuthenticateUserController implements Controller {
   private logger = Logger.getInstance();
@@ -28,27 +33,19 @@ export default class AuthenticateUserController implements Controller {
         httpRequest.body.userName,
         httpRequest.body.password
       );
-      return {
-        statusCode: 200,
-        body: { token }
-      };
+
+      return makeSucessResponse({ token });
     } catch (error) {
       this.logger.error(`[AuthenticateUserController] - handle - Error: ${error.message}`, {
         error
       });
-      return {
-        statusCode: 500,
-        body: 'Internal Server Error'
-      };
+      return makeInternalServerErrorResponse('Internal Server Error');
     }
   }
 
   private async validateParameters(userName: string, password: string): Promise<HttpResponse> {
     if (!userName || !password) {
-      return {
-        statusCode: 400,
-        body: 'Invalid Parameters'
-      };
+      return makeBadRequestResponse('Invalid Parameters');
     }
     return null;
   }
