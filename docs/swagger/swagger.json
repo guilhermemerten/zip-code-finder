@@ -18,6 +18,10 @@
     {
       "name": "user",
       "description": "Operação de login"
+    },
+    {
+      "name": "utils",
+      "description": "Operações utilitárias da API"
     }
   ],
   "schemes": [
@@ -45,19 +49,7 @@
             "description": "Objeto que representa o usuário",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "userName",
-                "password"
-              ],
-              "properties": {
-                "userName": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/UserRequest"
             }
           }
         ],
@@ -65,12 +57,7 @@
           "200": {
             "description": "Response de sucesso",
             "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/AuthenticationResponse"
             }
           },
           "400": {
@@ -109,24 +96,7 @@
           "200": {
             "description": "Response de sucesso",
             "schema": {
-              "type": "object",
-              "properties": {
-                "zipCode": {
-                  "type": "string"
-                },
-                "street": {
-                  "type": "string"
-                },
-                "neighborhodd": {
-                  "type": "string"
-                },
-                "city": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/ZipCodeResponse"
             }
           },
           "400": {
@@ -147,6 +117,48 @@
             "token": []
           }
         ]
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "tags": [
+          "utils"
+        ],
+        "summary": "Verifica se a api está online",
+        "description": "Verifica o status da API",
+        "operationId": "healthcheck",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Response de sucesso",
+            "schema": {
+              "$ref": "#/definitions/HealthCheckResponse"
+            }
+          }
+        }
+      }
+    },
+    "/statistics": {
+      "get": {
+        "tags": [
+          "utils"
+        ],
+        "summary": "Retorna estatisticas da API",
+        "description": "Coleta métricas de consumo de memória e cpu",
+        "operationId": "statistics",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Response de sucesso",
+            "schema": {
+              "$ref": "#/definitions/StatisticsResponse"
+            }
+          }
+        }
       }
     }
   },
@@ -198,6 +210,56 @@
       "properties": {
         "token": {
           "type": "string"
+        }
+      }
+    },
+    "HealthCheckResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "StatisticsResponse": {
+      "type": "object",
+      "properties": {
+        "upTime": {
+          "type": "number"
+        },
+        "cpuUsage": {
+          "$ref": "#/definitions/CpuUsage"
+        },
+        "memoryUsage": {
+          "$ref": "#/definitions/MemoryUsage"
+        }
+      }
+    },
+    "CpuUsage": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "number"
+        },
+        "system": {
+          "type": "number"
+        }
+      }
+    },
+    "MemoryUsage": {
+      "type": "object",
+      "properties": {
+        "rss": {
+          "type": "number"
+        },
+        "heapTotal": {
+          "type": "number"
+        },
+        "heapUsed": {
+          "type": "number"
+        },
+        "external": {
+          "type": "number"
         }
       }
     }
