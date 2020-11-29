@@ -44,6 +44,17 @@ describe('Testing util routes', () => {
       });
   });
 
+  it('should return a successful response for GET /swagger', done => {
+    agent
+      .get('/swagger')
+      .expect('Content-Type', 'text/html; charset=UTF-8')
+      .expect(301)
+      .end(err => {
+        if (err) throw err;
+        done();
+      });
+  });
+
   
 });
 
