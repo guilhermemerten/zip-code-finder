@@ -16,11 +16,16 @@ class ZipCodeGatewayAdapter implements ZipCodeGateway {
     if (!zipCodeEntity) {
       zipCodeEntity = await this.tryToFindSimilarZipCode(zipCode);
       if (!zipCodeEntity) {
+        this.logger.debug(`[ZipCodeGatewayAdapter] - findZipCode - Zip Code not found ${zipCode}`)
         return null;
       }
+      this.logger.info('[ZipCodeGatewayAdapter] - findZipCode - Similar zip code found', {
+        originZipCode: zipCode,
+        similar: zipCodeEntity.zipcode
+      });
     }
 
-    this.logger.debug(`Zip code`, zipCodeEntity);
+    this.logger.debug(`[ZipCodeGatewayAdapter] - findZipCode - Zip Code Found`, zipCodeEntity);
 
     const zipCodeDomainEntity: ZipCode = ZipCodeConverter.convertDBEntityToDomainEntity(
       zipCodeEntity

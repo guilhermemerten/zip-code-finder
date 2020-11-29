@@ -1,7 +1,10 @@
+import Logger from '../../infra/helpers/log/logger';
 import User from '../entities/user';
 import UserGateway from '../gateways/user-gateway';
 
 export default class AuthenticateUserUseCase {
+  private logger = Logger.getInstance();
+
   private readonly userGateway: UserGateway;
 
   constructor(userGateway: UserGateway) {
@@ -21,6 +24,7 @@ export default class AuthenticateUserUseCase {
         const jwtToken:string = await this.userGateway.generateJWT(user.userName);
         return jwtToken;
     }
+    this.logger.error(`[AuthenticateUserUseCase] - authenticateUser - Password not verified`, {userName})
     return null;
   }
 }

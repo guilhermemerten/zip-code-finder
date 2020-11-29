@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
-import {createConnection} from 'typeorm';
+import { createConnection } from 'typeorm';
 import utilRoutes from '../routes/util-routes';
 import zipCodeRoutes from '../routes/zip-code-routes';
 import userRoutes from '../routes/user-routes';
@@ -18,11 +18,19 @@ class ExpressServer {
 
   constructor() {
     this.app = express();
-    createConnection();
+    this.configureMySQLConnection();
     this.middleware();
     this.configureSwagger();
     this.configureRoutes();
-    this.configurePort();    
+    this.configurePort();
+  }
+
+  private async configureMySQLConnection() {
+    try{
+      await createConnection();
+    }catch(error){
+      this.logger.error('[ExpressServer] - constructor - Error connecting MySQL ');
+    }
   }
 
   getApp() {
@@ -46,7 +54,7 @@ class ExpressServer {
     }
   }
 
-  private configureSwagger() { 
+  private configureSwagger() {
     this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   }
 
