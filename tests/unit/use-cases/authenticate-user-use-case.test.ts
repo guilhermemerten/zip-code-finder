@@ -18,17 +18,18 @@ describe('Testing Authenticate Use Case', () => {
     findUser.mockRestore();
   });
 
-  it('Should return a error', async () => {
+  it('Should not return a token', async () => {
     const findUser = jest.spyOn(userGatewayAdapter, 'findUser');
     findUser.mockImplementation(() => {
       return Promise.resolve(null);
     });
     const useCase = new AuthenticateUserUseCase(userGatewayAdapter);
-    expect(useCase.authenticateUser('teste', 'magalu')).rejects.toThrow('Wrong user or password');
+    const token = await useCase.authenticateUser('teste', 'magalu');
+    expect(token).toBeNull();
     findUser.mockRestore();
   });
 
-  it('Should return a error', async () => {
+  it('Should not return a token', async () => {
     const findUser = jest.spyOn(userGatewayAdapter, 'findUser');
     findUser.mockImplementation((userName: string) => {
       const user = new User(
@@ -38,7 +39,8 @@ describe('Testing Authenticate Use Case', () => {
       return Promise.resolve(user);
     });
     const useCase = new AuthenticateUserUseCase(userGatewayAdapter);
-    expect(useCase.authenticateUser('teste', 'teste')).rejects.toThrow('Wrong user or password');
+    const token = await useCase.authenticateUser('teste', 'teste');
+    expect(token).toBeNull();
     findUser.mockRestore();
   });
 });

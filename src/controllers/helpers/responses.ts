@@ -7,6 +7,13 @@ export const makeBadRequestResponse = (body:string | object):HttpResponse =>{
       }
 }
 
+export const makeUnauthorizedResponse = (body:string | object):HttpResponse =>{
+  return {
+      statusCode: 401,
+      body
+    }
+}
+
 export const makeNotFoundResponse = (body:string | object):HttpResponse =>{
     return {
         statusCode: 404,

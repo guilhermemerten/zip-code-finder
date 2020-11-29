@@ -62,7 +62,7 @@ describe('Testing user routes', () => {
         password: 'teste'
       })
       .expect('Content-Type', 'application/json; charset=utf-8')
-      .expect(500)
+      .expect(401)
       .end(err => {
         if (err) throw err;
         done();

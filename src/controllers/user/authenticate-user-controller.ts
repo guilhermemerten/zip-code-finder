@@ -6,7 +6,8 @@ import { HttpRequest, HttpResponse } from '../interfaces/http';
 import {
   makeSucessResponse,
   makeInternalServerErrorResponse,
-  makeBadRequestResponse
+  makeBadRequestResponse,
+  makeUnauthorizedResponse
 } from '../helpers/responses';
 
 export default class AuthenticateUserController implements Controller {
@@ -33,6 +34,10 @@ export default class AuthenticateUserController implements Controller {
         httpRequest.body.userName,
         httpRequest.body.password
       );
+
+      if(!token){
+        return makeUnauthorizedResponse('Wrong username or password')
+      }
 
       return makeSucessResponse({ token });
     } catch (error) {

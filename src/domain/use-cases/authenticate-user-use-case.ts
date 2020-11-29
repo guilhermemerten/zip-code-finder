@@ -11,8 +11,8 @@ export default class AuthenticateUserUseCase {
   async authenticateUser(userName: string, password: string): Promise<string> {
     const user:User = await this.userGateway.findUser(userName);
 
-    if(user === null){
-      throw new Error('Wrong user or password.');
+    if(!user){
+      return null;
     }
     
     const verifiedPassword:boolean = await this.userGateway.verifyPassword(password, user.password);
@@ -21,6 +21,6 @@ export default class AuthenticateUserUseCase {
         const jwtToken:string = await this.userGateway.generateJWT(user.userName);
         return jwtToken;
     }
-    throw new Error('Wrong user or password.');
+    return null;
   }
 }
