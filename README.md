@@ -109,4 +109,23 @@ Essa rota expõem um endpoint para verificar a saúde da aplicação. Se estiver
 **(GET)/statistics**
 Essa rota expõem um endpoint para retornar dados referentes às estatísticas de consumo da API, como consumo de memória e processamento.
 
+## Testes
 
+Foram criados testes unitários e end2end para o projeto. 
+Para executá-los é preciso ter o Node 10 e o pacote NPM instalado na máquina.
+Acessar a raiz do projeto e executar os comandos via terminal:
+
+    npm install
+    npm run test
+
+Serão exibidos os resultados no terminal, também será gerado um relatório de coverage na pasta **coverage** na raiz do projeto.
+
+## Como funciona uma requisição web?
+
+Ao acessar um site na web, como por exemplo: http://www.netshoes.com.br ocorre o seguinte fluxo:
+
+ - O browser solicita o IP do endereço digitado para um servidor DNS.
+ - O browser com esse endereço IP e a porta digitada (default 80 para http e 443 para https) tenta estabelecer uma conexão TCP com o servidor.
+ - Ao estabelecer a conexão é feita uma requisição HTTP solicitando a página do endereço digitado.
+ - O servidor responde o conteúdo, geralmente HTML, o browser renderiza-o na tela para o usuário.
+ - Com o HTML renderizado em tela, outras requisições são realizadas para solicitar assets e dados, como css, imagens, pdfs e dados de apis.
