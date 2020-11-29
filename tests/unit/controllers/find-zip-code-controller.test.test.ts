@@ -8,7 +8,7 @@ describe('Testing Find Zip Code Controller', () => {
     it('Should return a sucess response ', async () => {
         const findZipCode = jest.spyOn(FindZipCodeUseCase.prototype,'findZipCode');
         findZipCode.mockImplementation(()=>{
-            const zipCode = new ZipCode('99560000', 'Avenida 7 de Setembro', 'Sarandi', 'RS');
+            const zipCode = new ZipCode('99560000', 'Avenida 7 de Setembro', 'Sarandi', 'RS', 'Centro');
             return Promise.resolve(zipCode);
         });
         const controller = new FindZipCodeController(zipCodeGatewayAdapter);
@@ -26,7 +26,7 @@ describe('Testing Find Zip Code Controller', () => {
     it('Should return a error response ', async () => {
         const findZipCode = jest.spyOn(FindZipCodeUseCase.prototype,'findZipCode');
         findZipCode.mockImplementation(()=>{
-            const zipCode = new ZipCode('99560000', 'Avenida 7 de Setembro', 'Sarandi', 'RS');
+            const zipCode = new ZipCode('99560000', 'Avenida 7 de Setembro', 'Sarandi', 'RS', 'Centro');
             return Promise.resolve(zipCode);
         });
         const controller = new FindZipCodeController(zipCodeGatewayAdapter);

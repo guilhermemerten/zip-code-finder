@@ -6,7 +6,7 @@ describe('Testing Find Zip Code Use Case', () => {
   it('Should return a Zip Code', async () => {
     const findZipCode = jest.spyOn(zipCodeGatewayAdapter, 'findZipCode');
     findZipCode.mockImplementation(() => {
-      const zipCode = new ZipCode('99560000', 'Avenida 7 de Setembro', 'Sarandi', 'SP');
+      const zipCode = new ZipCode('99560000', 'Avenida 7 de Setembro', 'Sarandi', 'RS', 'Centro');
       return Promise.resolve(zipCode);
     });
     const useCase = new FindZipCodeUseCase(zipCodeGatewayAdapter);
