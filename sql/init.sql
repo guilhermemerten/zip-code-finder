@@ -21,7 +21,7 @@ COLLATE=latin1_bin;
 
 INSERT INTO user
 (username, password)
-VALUES('magalu', '$2b$10$JqwRzy6MoPrtXkoBoRVDW.gthdGJ4bpRuAC6dliL/SH2SDjjgqgD6');
+VALUES('user', '$2b$10$kvEeVjqL/3VuNZn1Eey5T.oYTJkLDu6dY5cfnNcU2sIljpjYdAeW.');
 
 INSERT INTO zipcode
 (zipcode, city, street, neighborhood, state)
