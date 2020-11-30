@@ -29,19 +29,19 @@ VALUES('99560000', 'Sarandi', 'Avenida Expedicionario', 'Centro', 'RS');
 
 INSERT INTO zipcode
 (zipcode, city, street, neighborhood, state)
-VALUES('01408000', 'SÃ£o Paulo', 'Alameda Casa Branca', 'Jardim Paulista', 'SP');
+VALUES('01408000', 'São Paulo', 'Alameda Casa Branca', 'Jardim Paulista', 'SP');
 
 INSERT INTO zipcode
 (zipcode, city, street, neighborhood, state)
-VALUES('01408001', 'SÃ£o Paulo', 'Alameda Casa Branca', 'Jardim Paulista', 'SP');
+VALUES('01408001', 'São Paulo', 'Alameda Casa Branca', 'Jardim Paulista', 'SP');
 
 INSERT INTO zipcode
 (zipcode, city, street, neighborhood, state)
-VALUES('01228000', 'SÃ£o Paulo', 'Avenida AngÃ©lica', 'Santa CecÃ­lia', 'SP');
+VALUES('01228000', 'São Paulo', 'Avenida Angélica', 'Santa Cecí­lia', 'SP');
 
 INSERT INTO zipcode
 (zipcode, city, street, neighborhood, state)
-VALUES('01228200', 'SÃ£o Paulo', 'Avenida AngÃ©lica', 'Santa CecÃ­lia', 'SP');
+VALUES('01228200', 'São Paulo', 'Avenida Angélica', 'Santa Cecília', 'SP');
 
 Commit;
 

@@ -64,9 +64,10 @@ Isso irá limpar os containers do MySQL e da API.
 
 **Local**
 
-É necessário ter o **Node.js** e o gerenciador de pacotes **NPM** instalado.
-Acessar a pasta raiz e executar:
+É necessário ter o **Node.js**, o gerenciador de pacotes **NPM**, o **Docker** e **Docker Compose** instalados.
+Remover o serviço zip-code-finder do arquivo **docker-compose.yml* na raiz do projeto e executar:
 
+    docker-compose up
     npm install
     npm run build
     npm run start:dev
@@ -77,7 +78,7 @@ A API possui os seguintes endpoints:
 
 **(POST) /user/auth**
 
-Endpoint responsável por autenticar o usuário e gerar um token JWT necessário para realizar a consulta de CEP. 
+Endpoint responsável por autenticar o usuário e gerar um token JWT necessário para realizar a consulta de CEP. Esse token tem o tempo de expiração de **5 minutos**.
 
 É necessário passar no body da requisição o **userName** e **password**. 
 
